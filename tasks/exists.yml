@@ -8,10 +8,7 @@
   register: servicecheck_cat_unit
 
 - set_fact:
-    servicecheck:
-      systemd: "{{ servicecheck.systemd }}"
-      exists: true
-      started: "{{ servicecheck.started }}"
+    servicecheck: "{{ servicecheck | combine({'exists': true}) }}"
   when: servicecheck_cat_unit.rc == 0
 
 - include_tasks: started.yml
