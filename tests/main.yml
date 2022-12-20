@@ -1,0 +1,33 @@
+---
+- hosts: 127.0.0.1
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: true
+      when: ansible_os_family == 'Debian'
+
+    - name: Install firewalld
+      package:
+        name: firewalld
+        state: latest
+
+    - include_role:
+        name: "{{ playbook_dir.split('/')[:-1] | last }}"
+      unit:
+        msg: 'firewalld.service'
+
+    - debug:
+        msg: "{{ servicecheck }}"
+
+    - name: Start firewalld
+      systemd:
+        name: firewalld.service
+        state: started
+
+    - include_role:
+        name: "{{ playbook_dir.split('/')[:-1] | last }}"
+      unit:
+        msg: 'firewalld.service'
+
+    - debug:
+        msg: "{{ servicecheck }}"

@@ -1,0 +1,23 @@
+---
+# Default values
+- set_fact:
+    servicecheck:
+      systemd: false
+      exists: false
+      started: false
+
+- name: Install ps
+  package:
+    name: "procps{% if ansible_os_family == 'RedHat' %}-ng{% endif %}"
+    state: latest
+  register: servicecheck_installed_procps
+  when: servicecheck_installed_procps is not defined
+
+- name: Check if system is booted with systemd
+  command:
+    cmd: ps --no-headers -o comm 1
+  changed_when: false
+  register: servicecheck_pidone
+
+- include_tasks: exists.yml
+  when: servicecheck_pidone.stdout == 'systemd'

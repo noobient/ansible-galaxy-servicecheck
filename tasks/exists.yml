@@ -1,0 +1,16 @@
+---
+# This should work regardless of unit path or service state
+- name: "Check if {{ unit }} unit is present" # noqa command-instead-of-module
+  command:
+    cmd: "systemctl cat {{ unit }}"
+  changed_when: false
+  failed_when: false
+  register: servicecheck_cat_unit
+
+- set_fact:
+    servicecheck:
+      exists: true
+  when: servicecheck_cat_unit.rc == 0
+
+- include_tasks: started.yml
+  when: servicecheck_cat_unit.rc == 0

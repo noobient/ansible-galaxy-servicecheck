@@ -1,0 +1,12 @@
+---
+- name: "Check if {{ unit }} unit is running" # noqa command-instead-of-module
+  command:
+    cmd: "systemctl is-active {{ unit }}"
+  changed_when: false
+  failed_when: false
+  register: servicecheck_isactive_unit
+
+- set_fact:
+    servicecheck:
+      started: true
+  when: servicecheck_isactive_unit.rc == 0
