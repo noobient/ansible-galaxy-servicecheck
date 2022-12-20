@@ -8,5 +8,7 @@
 
 - set_fact:
     servicecheck:
+      systemd: "{{ servicecheck.systemd }}"
+      exists: "{{ servicecheck.exists }}"
       started: true
   when: servicecheck_isactive_unit.rc == 0

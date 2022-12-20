@@ -9,7 +9,9 @@
 
 - set_fact:
     servicecheck:
+      systemd: "{{ servicecheck.systemd }}"
       exists: true
+      started: "{{ servicecheck.started }}"
   when: servicecheck_cat_unit.rc == 0
 
 - include_tasks: started.yml

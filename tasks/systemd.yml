@@ -19,5 +19,12 @@
   changed_when: false
   register: servicecheck_pidone
 
+- set_fact:
+    servicecheck:
+      systemd: true
+      exists: "{{ servicecheck.exists }}"
+      started: "{{ servicecheck.started }}"
+  when: servicecheck_pidone.stdout == 'systemd'
+
 - include_tasks: exists.yml
   when: servicecheck_pidone.stdout == 'systemd'
