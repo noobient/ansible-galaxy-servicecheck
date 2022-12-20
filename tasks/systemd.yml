@@ -6,6 +6,11 @@
       exists: false
       started: false
 
+- name: Update apt cache
+  apt:
+    update_cache: true
+  when: ansible_os_family == 'Debian' and servicecheck_installed_procps is not defined
+
 - name: Install ps
   package:
     name: "procps{% if ansible_os_family == 'RedHat' %}-ng{% endif %}"
