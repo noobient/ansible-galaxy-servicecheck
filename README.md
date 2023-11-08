@@ -14,7 +14,7 @@ This role checks the state of systemd units.
 
 ```yml
 - include_role:
-    name: bviktor.servicecheck
+    name: noobient.servicecheck
   vars:
     unit: 'firewalld.service'
 ```
