@@ -4,7 +4,7 @@
     - include_role:
         name: "{{ playbook_dir.split('/')[:-1] | last }}"
       vars:
-        unit: 'firewalld.service'
+        unit: kf2.service
 
     - debug:
         msg: "{{ servicecheck }}"
